@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "name": "sasha",
+      "email": "ssdjfkhdfg@gmail.com",
+      "birthday": "2017-12-24",
+      "id": 1636619674339
+    },
+    {
+      "name": "ediv",
+      "email": "sldjfhn@sldjhfknm",
+      "birthday": "2017-05-24",
+      "id": 1636619692199
+    },
+    {
+      "name": "seryuy",
+      "email": "sd;fklsjhb@d;fklgjn",
+      "birthday": "2017-05-24",
+      "id": 1636633615130
+    },
+    {
+      "name": "maria",
+      "email": "ssdjfkhdfg@gmail.com",
+      "birthday": "2017-05-24",
+      "id": 1636635177170
+    },
+    {
+      "name": "marian",
+      "email": "ssdjfkhdfg@gmail.com",
+      "birthday": "2017-05-24",
+      "id": 1636635186910
+    },
+    {
+      "name": "kolya",
+      "email": "ssdjfkhdfg@gmail.com",
+      "birthday": "2017-05-24",
+      "id": 1636635297430
+    }
+  ]
+}
