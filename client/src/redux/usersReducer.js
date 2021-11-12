@@ -1,6 +1,6 @@
 import { GET_USERS, PROMISE_ERROR, PUT_USERS } from './actions';
 
-function promiseReducer(state, action) {
+function usersReducer(state, action) {
   if (state === undefined) {
     return {
       loading: false,
@@ -20,4 +20,4 @@ function promiseReducer(state, action) {
   return state;
 }
 
-export default promiseReducer;
+export default usersReducer;

@@ -39,12 +39,12 @@ function Header() {
       <ToolBar className={classes.root}>
         <Box className={classes.leftBar}>
           <Typography className={classes.links} variant="h6" noWrap>
-            <Link className={classes.links} to="/">
+            <Link className={classes.links} to="/users">
               All users
             </Link>
           </Typography>
           <Typography className={classes.links} variant="h6" noWrap>
-            <Link className={classes.links} to="/create">
+            <Link className={classes.links} to="/users/create">
               Create
             </Link>
           </Typography>

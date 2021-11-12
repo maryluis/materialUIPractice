@@ -1,2 +1,2 @@
-export { default as FormPage } from './FormPage';
+export { default as UserFormPage } from './UserFormPage';
 export { default as UsersPage } from './UsersPage';

@@ -1,10 +1,9 @@
-import { Grid, Container, Paper, Typography, Button, LinearProgress, InputBase } from '@material-ui/core';
+import { Grid, Container, Typography, LinearProgress, InputBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as _ from 'lodash';
-import { actionGetUsers, actionEditUser } from '../../redux/actionCreators';
+import { useCallback, useEffect, useState } from 'react';
+import { actionGetUsers } from '../../redux/actionCreators';
+import UserCard from './UserCard';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -54,14 +53,11 @@ const useStyles = makeStyles(() => ({
 function UsersPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const users = useSelector(state => state.promise.data);
-  const navigate = useNavigate();
-  const loading = useSelector(state => state.promise.loading);
+  const users = useSelector(state => state.users.data);
+  const loading = useSelector(state => state.users.loading);
   const [query, changeQuery] = useState('');
-  const clickHandler = (data) => {
-    dispatch(actionEditUser(data));
-    navigate('/edit');
-  };
+
+  const searchHandler = useCallback((e) => changeQuery(e.target.value), []);
   useEffect(() => {
     dispatch(actionGetUsers(query));
   }, [query]);
@@ -70,7 +66,7 @@ function UsersPage() {
       <InputBase
         className={classes.search}
         placeholder="Search…"
-        onChange={(e) => changeQuery(e.target.value)}
+        onChange={searchHandler}
       />
       <Grid
         container
@@ -83,21 +79,7 @@ function UsersPage() {
         {loading && <LinearProgress className={classes.loader} />}
         {!loading && users.length === 0 && <Typography>Sorry, no founded</Typography>}
         {users.length > 0 && users.map(({ name, email, id, birthday }) => (
-          <Paper className={classes.card} key={id}>
-            <Typography>
-              <b>name: </b>
-              { _.upperFirst(name) }
-            </Typography>
-            <Typography>
-              <b>email: </b>
-              {email}
-            </Typography>
-            <Typography>
-              <b>birthday: </b>
-              {birthday}
-            </Typography>
-            <Button onClick={() => clickHandler({ name, email, id, birthday })} size="small" variant="contained" color="primary" className={classes.button}> Edit </Button>
-          </Paper>
+          <UserCard key={id} name={name} email={email} id={id} birthday={birthday} />
         ))}
       </Grid>
     </Container>

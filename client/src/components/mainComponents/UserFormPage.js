@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function FormPage() {
+function UserFormPage() {
   const classes = useStyles();
   const { name, email, birthday, id } = useSelector(state => state.editData);
   const [nameInput, changeName] = useState(name || '');
@@ -55,11 +55,15 @@ function FormPage() {
       await postUser(URL_USERS, makeUserObj(nameInput.toLowerCase(),
         emailInput.toLowerCase(), birthdayInput));
     }
-    navigate('/');
+    navigate('/users');
   }, [nameInput, emailInput, birthdayInput]);
 
   const notCorrectEmail = emailInput.indexOf('@') === -1 || emailInput.length > 30 || emailInput.length < 10;
-  const notCorrectName = nameInput.length > 20 || nameInput.length < 4;
+  const notCorrectName = nameInput.length > 20 || nameInput.length < 0;
+
+  const emailHandler = useCallback((e) => changeEmail(e.target.value), []);
+  const nameHandler = useCallback((e) => changeName(e.target.value), []);
+  const birthdayHandler = useCallback((e) => changeBirthday(e.target.value), []);
 
   useEffect(() => {
     return (() => dispatch(actionDeleteData()));
@@ -72,9 +76,9 @@ function FormPage() {
         <form className={classes.form}>
           <Box>
             <Box className={classes.inputRow}>
-              <TextField value={nameInput} onChange={(e) => changeName(e.target.value)} className={classes.inputText} placeholder="name" />
+              <TextField value={nameInput} onChange={nameHandler} className={classes.inputText} placeholder="name" />
               <TextField
-                onChange={(e) => changeBirthday(e.target.value)}
+                onChange={birthdayHandler}
                 className={classes.birthday}
                 id="date"
                 label="Birthday"
@@ -86,10 +90,10 @@ function FormPage() {
               />
             </Box>
             <Box>
-              <TextField value={emailInput} onChange={(e) => changeEmail(e.target.value)} className={classes.inputText} placeholder="email" />
+              <TextField value={emailInput} onChange={emailHandler} className={classes.inputText} placeholder="email" />
             </Box>
           </Box>
-          <Button disabled={notCorrectEmail || notCorrectName} onClick={() => clickHandler()} variant="contained" color="primary">
+          <Button disabled={notCorrectEmail || notCorrectName} onClick={clickHandler} variant="contained" color="primary">
             Send
           </Button>
         </form>
@@ -98,4 +102,4 @@ function FormPage() {
   );
 }
 
-export default FormPage;
+export default UserFormPage;

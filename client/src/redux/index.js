@@ -1,11 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { SagaMiddleware, rootSaga } from '../saga';
 import editReducer from './editReducer';
-import promiseReducer from './promiseReducer';
+import usersReducer from './usersReducer';
 
 const store = createStore(combineReducers({
   editData: editReducer,
-  promise: promiseReducer,
+  users: usersReducer,
 }), applyMiddleware(SagaMiddleware));
 
 SagaMiddleware.run(rootSaga);
