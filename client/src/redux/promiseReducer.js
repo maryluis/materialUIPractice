@@ -4,7 +4,7 @@ function promiseReducer(state, action) {
   if (state === undefined) {
     return {
       loading: false,
-      error: false,
+      error: null,
       data: [],
     };
   }
