@@ -59,7 +59,7 @@ function FormPage() {
   }, [nameInput, emailInput, birthdayInput]);
 
   const notCorrectEmail = emailInput.indexOf('@') === -1 || emailInput.length > 30 || emailInput.length < 10;
-  const notCorrectName = nameInput.length > 20 || nameInput.length < 5;
+  const notCorrectName = nameInput.length > 20 || nameInput.length < 4;
 
   useEffect(() => {
     return (() => dispatch(actionDeleteData()));

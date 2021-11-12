@@ -54,7 +54,7 @@ const useStyles = makeStyles(() => ({
 function UsersPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const users = useSelector(state => state.users);
+  const users = useSelector(state => state.promise.data);
   const navigate = useNavigate();
   const loading = useSelector(state => state.promise.loading);
   const [query, changeQuery] = useState('');
