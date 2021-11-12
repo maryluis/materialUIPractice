@@ -2,12 +2,12 @@ export const URL_USERS = 'http://localhost:3000/users';
 
 const makeQueryUrl = (query) => `${URL_USERS}?q=${query}`;
 
-const makeEditUrl = (id) => `${URL_USERS}/${id}`;
+const makeIdUrl = (id) => `${URL_USERS}/${id}`;
 
-export function makeUserObj(name, email, birthday) {
+export function makeUserObj(name, email, birthday, country) {
   return (
     {
-      name, email, birthday, id: Date.now(),
+      name, email, birthday, id: Date.now(), location: country,
     }
   );
 }
@@ -38,8 +38,13 @@ export async function getUsers(query) {
   return response.json();
 }
 
+export async function getOneUser(id) {
+  const response = await fetch(makeIdUrl(id));
+  return response.json();
+}
+
 export async function editUser(id, data) {
-  await fetch(makeEditUrl(id), {
+  await fetch(makeIdUrl(id), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

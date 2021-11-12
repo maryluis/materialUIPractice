@@ -1,6 +1,6 @@
 import { Typography, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import * as _ from 'lodash';
+import upperFirst from 'lodash/upperFirst';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -26,19 +26,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function UserCard({ name, email, id, birthday }) {
+function UserCard({ name, email, id, birthday, location }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const clickHandler = useCallback(() => {
-    dispatch(actionEditUser({ name, email, id, birthday }));
+    dispatch(actionEditUser({ name, email, id, birthday, location }));
     navigate(`/users/${id}/edit`);
   }, [name, email, id, birthday]);
   return (
     <Paper className={classes.card} key={id}>
       <Typography>
         <b>name: </b>
-        { _.upperFirst(name) }
+        { upperFirst(name) }
       </Typography>
       <Typography>
         <b>email: </b>
@@ -47,6 +47,10 @@ function UserCard({ name, email, id, birthday }) {
       <Typography>
         <b>birthday: </b>
         {birthday}
+      </Typography>
+      <Typography>
+        <b>location: </b>
+        {location}
       </Typography>
       <Button onClick={clickHandler} size="small" variant="contained" color="primary" className={classes.button}> Edit </Button>
     </Paper>
@@ -58,12 +62,14 @@ UserCard.propTypes = {
   email: PropTypes.string,
   id: PropTypes.number,
   birthday: PropTypes.string,
+  location: PropTypes.string,
 };
 UserCard.defaultProps = {
   name: '',
   email: '',
   id: 0,
   birthday: '',
+  location: 'Ukraine',
 };
 
 export default UserCard;

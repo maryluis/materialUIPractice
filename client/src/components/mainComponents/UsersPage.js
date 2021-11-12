@@ -78,8 +78,15 @@ function UsersPage() {
       >
         {loading && <LinearProgress className={classes.loader} />}
         {!loading && users.length === 0 && <Typography>Sorry, no founded</Typography>}
-        {users.length > 0 && users.map(({ name, email, id, birthday }) => (
-          <UserCard key={id} name={name} email={email} id={id} birthday={birthday} />
+        {users.length > 0 && users.map(({ name, email, id, birthday, location }) => (
+          <UserCard
+            key={id}
+            location={location}
+            name={name}
+            email={email}
+            id={id}
+            birthday={birthday}
+          />
         ))}
       </Grid>
     </Container>

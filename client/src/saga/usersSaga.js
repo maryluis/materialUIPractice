@@ -1,7 +1,7 @@
-import { debounce, put, call } from 'redux-saga/effects';
-import { GET_USERS } from '../redux/actions';
-import { actionError, actionPutUsers } from '../redux/actionCreators';
-import { getUsers } from '../tools';
+import { debounce, put, call, takeEvery } from 'redux-saga/effects';
+import { GET_ONE_USER, GET_USERS } from '../redux/actions';
+import { actionError, actionPutOneUser, actionPutUsers } from '../redux/actionCreators';
+import { getUsers, getOneUser } from '../tools';
 
 function* usersWorker(data) {
   try {
@@ -12,8 +12,18 @@ function* usersWorker(data) {
   }
 }
 
+function* oneUserWorker(data) {
+  try {
+    const newData = yield call(() => getOneUser(data.payload));
+    yield put(actionPutOneUser(newData));
+  } catch (e) {
+    yield put(actionError(e.message));
+  }
+}
+
 function* usersWatcher() {
   yield debounce(1000, GET_USERS, usersWorker);
+  yield takeEvery(GET_ONE_USER, oneUserWorker);
 }
 
 export default usersWatcher;
