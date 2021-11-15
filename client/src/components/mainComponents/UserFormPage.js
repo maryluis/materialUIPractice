@@ -81,7 +81,7 @@ function UserFormPage() {
       dispatch(actionGetOneUser(id));
     }
     return (() => dispatch(actionDeleteData()));
-  }, []);
+  }, [id]);
   const { name, email, birthday, location } = useSelector(state => state.editData.data);
 
   const handleChange = useCallback((e) => {
