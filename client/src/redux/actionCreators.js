@@ -1,4 +1,4 @@
-import { EDIT_USER, GET_USERS, PUT_USERS, DELETE_DATA, PROMISE_ERROR, GET_ONE_USER, PUT_ONE_USER } from './actions';
+import { GET_ONE_USER_ERROR, EDIT_USER, GET_USERS, PUT_USERS, DELETE_DATA, PROMISE_ERROR, GET_ONE_USER, PUT_ONE_USER, SAVE_CHANGES, CREATE_USER } from './actions';
 
 export const actionGetUsers = (query) => {
   return ({
@@ -43,5 +43,25 @@ export const actionEditUser = (payload) => {
 export const actionDeleteData = () => {
   return ({
     type: DELETE_DATA,
+  });
+};
+
+export const actionGetFormError = payload => {
+  return ({
+    type: GET_ONE_USER_ERROR,
+    payload,
+  });
+};
+export const actionSaveChanges = (payload) => {
+  return ({
+    type: SAVE_CHANGES,
+    payload,
+  });
+};
+
+export const actionCreateUser = (payload) => {
+  return ({
+    type: CREATE_USER,
+    payload,
   });
 };

@@ -1,7 +1,10 @@
 export const GET_USERS = 'GET_USERS';
+export const PROMISE_ERROR = 'PROMISE_ERROR';
 export const PUT_USERS = 'PUT_USERS';
 export const EDIT_USER = 'EDIT_REDUCER';
-export const DELETE_DATA = 'DELETE_DATA';
 export const GET_ONE_USER = 'GET_ONE_USER';
+export const GET_ONE_USER_ERROR = 'GET_ONE_USER_ERROR';
 export const PUT_ONE_USER = 'PUT_ONE_USER';
-export const PROMISE_ERROR = 'PROMISE_ERROR';
+export const DELETE_DATA = 'DELETE_DATA';
+export const SAVE_CHANGES = 'SAVE_CHANGES';
+export const CREATE_USER = 'CREATE_USER';

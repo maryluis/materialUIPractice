@@ -1,11 +1,10 @@
 import { Typography, TextField, Container, Box, Button, Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import country from 'country-list-js';
-import { URL_USERS, makeUserObj, postUser, editUser } from '../../tools';
-import { actionDeleteData } from '../../redux/actionCreators';
+import { actionCreateUser, actionDeleteData, actionEditUser, actionGetOneUser, actionSaveChanges } from '../../redux/actionCreators';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -74,37 +73,34 @@ const useStyles = makeStyles(() => ({
 function UserFormPage() {
   const countries = country.names().sort();
   const classes = useStyles();
-  const { name, email, birthday, id, location } = useSelector(state => state.editData);
-  const [nameInput, changeName] = useState(name || '');
-  const [emailInput, changeEmail] = useState(email || '');
-  const [countryData, changeCountry] = useState(location || 'Ukraine');
-  const [birthdayInput, changeBirthday] = useState(birthday || '2017-05-24');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const clickHandler = useCallback(async () => {
-    if (id) {
-      await editUser(id, { name: nameInput.toLowerCase(),
-        email: emailInput.toLowerCase(),
-        birthday: birthdayInput,
-        location: countryData });
-    } else {
-      await postUser(URL_USERS, makeUserObj(nameInput.toLowerCase(),
-        emailInput.toLowerCase(), birthdayInput, countryData));
-    }
-    navigate('/users');
-  }, [nameInput, emailInput, birthdayInput, countryData]);
-
-  const notCorrectEmail = emailInput.indexOf('@') === -1 || emailInput.length > 30 || emailInput.length < 10;
-  const notCorrectName = nameInput.length > 20 || nameInput.length < 0;
-
-  const emailHandler = useCallback((e) => changeEmail(e.target.value), []);
-  const nameHandler = useCallback((e) => changeName(e.target.value), []);
-  const birthdayHandler = useCallback((e) => changeBirthday(e.target.value), []);
-  const countryHandler = useCallback((e) => changeCountry(e.target.value), []);
-
+  const { id } = useParams();
   useEffect(() => {
+    if (id) {
+      dispatch(actionGetOneUser(id));
+    }
     return (() => dispatch(actionDeleteData()));
   }, []);
+  const { name, email, birthday, location } = useSelector(state => state.editData.data);
+
+  const handleChange = useCallback((e) => {
+    dispatch(actionEditUser({ [e.target.name]: e.target.value }));
+  }, []);
+  const handleSubmit = useCallback(() => {
+    if (id) {
+      dispatch(actionSaveChanges({ id, data: { name, email, birthday, location } }));
+    } else {
+      dispatch(actionCreateUser({ name, email, birthday, location }));
+    }
+    navigate('/users');
+  });
+  const lastDate = 1355263200000;
+  const earlyDate = 29800800000;
+  const isLoading = useSelector(state => state.editData.loading);
+  const isCorrectName = name.length > 0;
+  const isCorrectEmail = email.length > 10 && email.length < 30 && email.indexOf('@') !== -1;
+  const isCorrectDate = Date.parse(birthday) > earlyDate && Date.parse(birthday) < lastDate;
 
   return (
     <Container className={classes.container}>
@@ -113,27 +109,31 @@ function UserFormPage() {
         <form className={classes.form}>
           <Box>
             <Box className={classes.oneRow}>
-              <TextField value={nameInput} onChange={nameHandler} className={classes.inputText} placeholder="name" />
+              <TextField disabled={isLoading} onChange={handleChange} name="name" value={name} className={classes.inputText} placeholder="name" />
               <TextField
-                onChange={birthdayHandler}
+                disabled={isLoading}
+                onChange={handleChange}
+                name="birthday"
+                value={birthday}
                 className={classes.birthday}
                 id="date"
                 label="Birthday"
                 type="date"
-                defaultValue={birthdayInput}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Box>
             <Box className={classes.oneRow}>
-              <TextField value={emailInput} onChange={emailHandler} className={classes.inputText} placeholder="email" />
+              <TextField disabled={isLoading} value={email} onChange={handleChange} name="email" className={classes.inputText} placeholder="email" />
               <Select
                 className={classes.inputLocation}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={countryData}
-                onChange={countryHandler}
+                onChange={handleChange}
+                name="location"
+                disabled={isLoading}
+                value={location}
               >
                 {countries.map((item) => (
                   <MenuItem className={classes.location} key={item} value={item}>
@@ -143,11 +143,12 @@ function UserFormPage() {
               </Select>
             </Box>
           </Box>
-          <Button disabled={notCorrectEmail || notCorrectName} onClick={clickHandler} variant="contained" color="primary">
+          <Button disabled={isLoading || !isCorrectName || !isCorrectEmail || !isCorrectDate} onClick={handleSubmit} variant="contained" color="primary">
             Send
           </Button>
         </form>
       </Box>
+
     </Container>
   );
 }

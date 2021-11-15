@@ -3,9 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import upperFirst from 'lodash/upperFirst';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { actionEditUser } from '../../redux/actionCreators';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -27,13 +25,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 function UserCard({ name, email, id, birthday, location }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const clickHandler = useCallback(() => {
-    dispatch(actionEditUser({ name, email, id, birthday, location }));
     navigate(`/users/${id}/edit`);
-  }, [name, email, id, birthday]);
+  }, [id]);
   return (
     <Paper className={classes.card} key={id}>
       <Typography>

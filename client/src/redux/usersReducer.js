@@ -1,4 +1,4 @@
-import { GET_ONE_USER, GET_USERS, PROMISE_ERROR, PUT_ONE_USER, PUT_USERS } from './actions';
+import { GET_USERS, PROMISE_ERROR, PUT_USERS } from './actions';
 
 function usersReducer(state, action) {
   if (state === undefined) {
@@ -8,10 +8,10 @@ function usersReducer(state, action) {
       data: [],
     };
   }
-  if (action.type === GET_USERS || action.type === GET_ONE_USER) {
+  if (action.type === GET_USERS) {
     return { ...state, loading: true };
   }
-  if (action.type === PUT_USERS || action.type === PUT_ONE_USER) {
+  if (action.type === PUT_USERS) {
     return { ...state, data: action.payload, loading: false };
   }
   if (action.type === PROMISE_ERROR) {
