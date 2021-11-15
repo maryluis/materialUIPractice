@@ -95,12 +95,11 @@ function UserFormPage() {
     }
     navigate('/users');
   });
-  const lastDate = 1355263200000;
-  const earlyDate = 29800800000;
+  const lastDate = Date.now();
   const isLoading = useSelector(state => state.editData.loading);
   const isCorrectName = name.length > 0;
   const isCorrectEmail = email.length > 10 && email.length < 30 && email.indexOf('@') !== -1;
-  const isCorrectDate = Date.parse(birthday) > earlyDate && Date.parse(birthday) < lastDate;
+  const isCorrectDate = Date.parse(birthday) < lastDate;
 
   return (
     <Container className={classes.container}>

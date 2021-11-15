@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import createSagaMiddleware from 'redux-saga';
-import { usersWatcher, formUserWatcher } from './usersSaga';
+import usersWatcher from './usersSaga';
+import formUserWatcher from './formSaga';
 
 function* rootSaga() {
   yield all([
