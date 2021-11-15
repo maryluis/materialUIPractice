@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => ({
     '@media (max-width:460px)': {
       margin: '0',
       left: '10px',
+      width: '173px',
     },
   },
   inputText: {

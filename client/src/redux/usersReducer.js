@@ -1,5 +1,11 @@
 import { GET_USERS, PROMISE_ERROR, PUT_USERS } from './actions';
-
+/**
+ *
+ * @param {object} state state before update
+ * @param {object} action some object
+ * @param {string} action.type type of action for states changing
+ * @returns {object} new state after update
+ */
 function usersReducer(state, action) {
   if (state === undefined) {
     return {
