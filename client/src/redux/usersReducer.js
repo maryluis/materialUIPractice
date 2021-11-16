@@ -1,6 +1,6 @@
 import { GET_USERS, PROMISE_ERROR, PUT_USERS } from './actions';
 /**
- *
+ * @callback
  * @param {object} state state before update
  * @param {object} action some object
  * @param {string} action.type type of action for states changing

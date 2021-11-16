@@ -5,7 +5,7 @@ import { getUsers } from '../tools';
 /**
  * Saga worker which takes data about several users by query or all users
  * @param {object} data includes action string and query string in payload
- * @param {atring} data.payload query string to find users. May be empty
+ * @param {string} data.payload query string to find users. May be empty
  */
 function* usersWorker(data) {
   try {

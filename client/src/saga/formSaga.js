@@ -3,7 +3,7 @@ import { actionPutOneUser, actionGetFormError, actionDeleteData } from '../redux
 import { getOneUser, editUser, postUser, URL_USERS } from '../tools';
 import { CREATE_USER, GET_ONE_USER, SAVE_CHANGES } from '../redux/actions';
 /**
- * This saga worker gets some users by query or takes all users
+ * @callback This saga worker gets some users by query or takes all users
  * @param {object} data contains string to get users by query parameter
  * @param {string} data.payload query parameter to search users
  */
@@ -22,7 +22,8 @@ function* oneUserWorker(data) {
  * @param {object} data
  * @param {string} data.payload.id unique users parameter to put changes to the correct
  * object at the backend
- * @param {object} data.payload.data object with keys name, email birthday and location parameters
+ * @param {import('../redux/actionCreators').userData} data.payload.data object with keys name,
+ *  email birthday and location parameters
  */
 function* saveUserWorker(data) {
   yield call(() => editUser(data.payload.id, data.payload.data));
@@ -31,7 +32,8 @@ function* saveUserWorker(data) {
 /**
  * This saga worker creates new user and sends data to the backend
  * @param {object} data contains action string and payload (data about new user)
- * @param {object} data.payload data about new user contains name, email, location and birthday
+ * @param {import('../redux/actionCreators').userData} data.payload data about new user
+ * contains name, email, location and birthday
  */
 function* createUserWorker(data) {
   yield call(() => postUser(URL_USERS, data.payload));

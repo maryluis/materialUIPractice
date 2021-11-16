@@ -1,36 +1,53 @@
 import { GET_ONE_USER_ERROR, EDIT_USER, GET_USERS, PUT_USERS, DELETE_DATA, PROMISE_ERROR, GET_ONE_USER, PUT_ONE_USER, SAVE_CHANGES, CREATE_USER } from './actions';
 /**
- *
- * @param {string} query parameter for search user
- * @returns {object} returns action to get all data users which contain query parameter
+ * @typedef {object} userData contains information about user: name, email, location and birthday.
+ * sometimes it includes unique id too.
+ * @property {string} name
+ * @property {string} email
+ * @property {string} birthday
+ * @property {string} location
+ * @property {number} [id]
  */
-export const actionGetUsers = (query) => {
+
+/**
+ * @typedef {object} action
+ * @property {userData | string} [payload]
+ * @property {string} type
+ */
+
+/**
+ * @callback actionCreator
+ * @param {userData | string} payload
+ * @returns {object}
+ */
+
+/**
+ *
+ * @param {string} payload parameter for search user
+ * @returns {action} returns action to get all data users which contain query parameter
+ */
+export const actionGetUsers = (payload) => {
   return ({
     type: GET_USERS,
-    payload: query,
+    payload,
   });
 };
 /**
  *
- * @param {string} id unique users parameter to get his data for edit it
- * @returns {object} return action to get data
+ * @param {string} payload unique users parameter to get his data for edit it
+ * @returns {action} return action to get data
  */
-export const actionGetOneUser = id => {
+export const actionGetOneUser = payload => {
   return ({
     type: GET_ONE_USER,
-    payload: id,
+    payload,
   });
 };
 
 /**
  *
- * @param {object} payload has several keys with information about user
- * @param {string} payload.name
- * @param {string} payload.birthday
- * @param {string} payload.location
- * @param {string} payload.email
- * @param {number} payload.id
- * @returns {object} returns object with data about user and put it to the reducer
+ * @param {userData} payload has several keys with information about user
+ * @returns {action} returns object with data about user and put it to the reducer
  */
 export const actionPutOneUser = payload => {
   return ({
@@ -64,13 +81,8 @@ export const actionError = (payload) => {
 };
 
 /**
- * @param {object} payload has several keys with information about user
- * @param {string} payload.name
- * @param {string} payload.birthday
- * @param {string} payload.location
- * @param {string} payload.email
- * @param {number} payload.id
- * @returns { type: string, payload: object  }
+ * @param {userData} payload has several keys with information about user
+ * @returns {action}
  */
 export const actionEditUser = (payload) => {
   return ({
@@ -79,7 +91,7 @@ export const actionEditUser = (payload) => {
 };
 /**
  *
- * @returns { type: string } action to delete data before component will unmount
+ * @returns {action} action to delete data before component will unmount
  */
 export const actionDeleteData = () => {
   return ({
@@ -89,7 +101,7 @@ export const actionDeleteData = () => {
 /**
  *
  * @param {string} payload if fetch catch an error payload will contains an error message
- * @returns {object} returns action to put an error message to the reducer
+ * @returns {action} returns action to put an error message to the reducer
  */
 export const actionGetFormError = payload => {
   return ({
@@ -98,14 +110,9 @@ export const actionGetFormError = payload => {
   });
 };
 /**
- *
- * @param {object} payload
- * @param {string} payload.name
- * @param {string} payload.birthday
- * @param {string} payload.location
- * @param {string} payload.email
- * @param {number} payload.id
- * @returns { type: string, payload: object  } action to save changes in the user object and send
+ * @callback
+ * @param {userData} payload
+ * @returns {action} action to save changes in the user object and send
  *  it to the backend
  */
 export const actionSaveChanges = (payload) => {
@@ -116,12 +123,8 @@ export const actionSaveChanges = (payload) => {
 };
 /**
  *
- * @param {object} payload
- * @param {string} payload.name
- * @param {string} payload.birthday
- * @param {string} payload.location
- * @param {string} payload.email
- * @returns { type: string, payload: object  } action to save data about new user and send
+ * @param {userData} payload
+ * @returns {action} action to save data about new user and send
  *  it to the backend
  */
 export const actionCreateUser = (payload) => {

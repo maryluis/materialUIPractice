@@ -7,7 +7,7 @@ const defaultForm = {
   location: 'Ukraine',
 };
 /**
- *
+ * @callback
  * @param {object} state state before update
  * @param {object} action some object
  * @param {string} action.type type of action for states changing
